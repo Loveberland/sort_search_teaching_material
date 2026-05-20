@@ -28,10 +28,10 @@ public class InitDisplay extends JFrame {
                 insert = new Btn("Insertion sort", new Color(179, 157, 219), Color.WHITE);
                 merge = new Btn("Merge sort", new Color(179, 157, 219), Color.WHITE);
 
-                bubble.setSize(80, 45);
-                selection.setSize(80, 45);
-                insert.setSize(80, 45);
-                merge.setSize(80, 45);
+                bubble.setSize(320, 180);
+                selection.setSize(320, 180);
+                insert.setSize(320, 180);
+                merge.setSize(320, 180);
         }
 
         private void initLayout() {
@@ -45,7 +45,7 @@ public class InitDisplay extends JFrame {
                 btnPanel.add(merge.getBtn());
 
                 mainPanel.add(titleLabel, BorderLayout.NORTH);
-                mainPanel.add(btnPanel, BorderLayout.SOUTH);
+                mainPanel.add(btnPanel, BorderLayout.CENTER);
                 add(mainPanel);
         }
 
