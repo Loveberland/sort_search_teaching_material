@@ -8,9 +8,10 @@ import java.util.Random;
 
 public class BarPanel extends JPanel {
         private List<Bar> bars;
-        private static final int MIN_VAL = 5;
+        private static final int MIN_VAL = 10;
         private static final int MAX_VAL = 100;
-        private static final int DEFAULT_AMOUNT = 10;
+        private static Random rand = new Random();
+        private static final int DEFAULT_AMOUNT = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
         private static final int GAP = 4;
         private static final int BOT_PAD = 20;
         private static final double BAR_MAX_HEI_RATIO = 0.85;
@@ -23,7 +24,6 @@ public class BarPanel extends JPanel {
 
         public void generateBars(int amount) {
                 bars.clear();
-                Random rand = new Random();
                 for (int i = 0; i < amount; i++) {
                         int value = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
                         bars.add(new Bar(value));
