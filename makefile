@@ -20,6 +20,7 @@ endif
 
 JAVAC := javac
 JAVA := java
+JFLAGS := -Xlint:deprecation
 SRC_DIR := src
 OUT_DIR := out
 MAIN_CLASS := main.java.com.stm.Main
@@ -39,7 +40,7 @@ compile: info
 	$(ECHO) "Creating output directory"
 	$(MKDIR)
 	$(ECHO) "Compiling sources"
-	$(JAVAC) -d $(OUT_DIR) -sourcepath $(SRC_DIR) $(SOURCES)
+	$(JAVAC) -d $(OUT_DIR) $(JFLAGS) -sourcepath $(SRC_DIR) $(SOURCES)
 	$(ECHO) "Compile complete"
 
 .PHONY: run

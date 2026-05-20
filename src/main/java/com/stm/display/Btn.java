@@ -6,9 +6,9 @@ import java.awt.*;
 public class Btn {
         private JButton button;
 
-        public Btn(String label,  Color bgColor, Color txtColor) {
+        public Btn(String label, Color bgColor, Color txtColor) {
                 button = new JButton(label);
-                button.setBackground(bgColor); 
+                button.setBackground(bgColor);
                 button.setForeground(txtColor);
                 button.setFocusPainted(false);
                 button.setFont(new Font("Arial", Font.BOLD, 14));

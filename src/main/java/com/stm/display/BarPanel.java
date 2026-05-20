@@ -1,0 +1,74 @@
+package main.java.com.stm.display;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class BarPanel extends JPanel {
+        private List<Bar> bars;
+        private static final int MIN_VAL = 5;
+        private static final int MAX_VAL = 100;
+        private static final int DEFAULT_AMOUNT = 10;
+        private static final int GAP = 4;
+        private static final int BOT_PAD = 20;
+        private static final double BAR_MAX_HEI_RATIO = 0.85;
+
+        public BarPanel() {
+                setBackground(Color.WHITE);
+                bars = new ArrayList<>();
+                generateBars(DEFAULT_AMOUNT);
+        }
+
+        public void generateBars(int amount) {
+                bars.clear();
+                Random rand = new Random();
+                for (int i = 0; i < amount; i++) {
+                        int value = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
+                        bars.add(new Bar(value));
+                }
+                repaint();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                if (bars.isEmpty())
+                        return;
+
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(
+                                RenderingHints.KEY_ANTIALIASING,
+                                RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int panelWid = getWidth();
+                int panelHei = getHeight();
+                int totalBars = bars.size();
+
+                int barWid = (panelWid - (totalBars + 1) * GAP) / totalBars;
+                if (barWid < 1)
+                        barWid = 1;
+
+                int maxBarHei = (int) (panelHei * BAR_MAX_HEI_RATIO);
+
+                for (int i = 0; i < totalBars; i++) {
+                        Bar bar = bars.get(i);
+                        int barHei = (int) ((bar.getValue() / 100.0) * maxBarHei);
+                        int x = GAP + i * (barWid + GAP);
+                        int y = panelHei - barHei - BOT_PAD;
+
+                        g2d.setColor(bar.getColor());
+                        g2d.fillRect(x, y, barWid, barHei);
+
+                        if (barWid >= 20) {
+                                g2d.setColor(Color.DARK_GRAY);
+                                g2d.setFont(new Font("Arial", Font.PLAIN, 11));
+                                String val = String.valueOf(bar.getValue());
+                                FontMetrics fm = g2d.getFontMetrics();
+                                int textX = x + (barWid - fm.stringWidth(val)) / 2;
+                                g2d.drawString(val, textX, y - 4);
+                        }
+                }
+        }
+}

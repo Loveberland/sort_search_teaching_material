@@ -6,11 +6,12 @@ import java.awt.*;
 public class InitDisplay extends JFrame {
         private JPanel mainPanel;
         private JLabel titleLabel;
+        private GraphicsDevice device;
 
         private Btn bubble;
         private Btn selection;
         private Btn insert;
-        private Btn merge; 
+        private Btn merge;
 
         public InitDisplay(String title, int wid, int hei) {
                 super(title);
@@ -22,7 +23,7 @@ public class InitDisplay extends JFrame {
         private void initComponents() {
                 titleLabel = new JLabel("Sort", SwingConstants.CENTER);
                 titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
-                
+
                 bubble = new Btn("Bubble sort", new Color(179, 157, 219), Color.WHITE);
                 selection = new Btn("Selection sort", new Color(179, 157, 219), Color.WHITE);
                 insert = new Btn("Insertion sort", new Color(179, 157, 219), Color.WHITE);
@@ -50,7 +51,16 @@ public class InitDisplay extends JFrame {
         }
 
         private void configureWindow(int wid, int hei) {
-                setSize(wid, hei);
+                device = GraphicsEnvironment
+                                .getLocalGraphicsEnvironment()
+                                .getDefaultScreenDevice();
+                setUndecorated(true);
+                setResizable(false);
+                if (device.isFullScreenSupported()) {
+                        device.setFullScreenWindow(this);
+                } else {
+                        setExtendedState(JFrame.MAXIMIZED_BOTH);
+                }
                 setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 setLocationRelativeTo(null);
                 setVisible(true);
@@ -58,17 +68,24 @@ public class InitDisplay extends JFrame {
 
         public void onBubbleClicked(Runnable action) {
                 bubble.onClick(action);
-        }        
-        
+        }
+
         public void onSelectionClicked(Runnable action) {
                 selection.onClick(action);
-        }        
-        
+        }
+
         public void onInsertionClicked(Runnable action) {
                 insert.onClick(action);
         }
-  
+
         public void onMergeClicked(Runnable action) {
                 merge.onClick(action);
+        }
+
+        public void hideWindow() {
+                if (device != null) {
+                        device.setFullScreenWindow(null);
+                }
+                setVisible(false);
         }
 }
