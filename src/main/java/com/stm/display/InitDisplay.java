@@ -5,8 +5,7 @@ import java.awt.*;
 
 public class InitDisplay extends JFrame {
         private JPanel mainPanel;
-        private JLabel titleLabel;
-        private GraphicsDevice device;
+        private JLabel titleLabel; private GraphicsDevice device;
 
         private Btn bubble;
         private Btn selection;
@@ -88,4 +87,12 @@ public class InitDisplay extends JFrame {
                 }
                 setVisible(false);
         }
+
+	public void showWindow() {
+		if (device != null && device.isFullScreenSupported()) {
+			device.setFullScreenWindow(this);
+		}
+		setVisible(true);	
+	}
 }
+

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BarPanel extends JPanel {
-        private List<Bar> bars;
+        public List<Bar> bars;
         private static final int MIN_VAL = 10;
         private static final int MAX_VAL = 100;
         private static Random rand = new Random();

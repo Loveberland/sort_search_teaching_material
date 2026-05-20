@@ -9,22 +9,22 @@ public class Main {
                         InitDisplay menu = new InitDisplay("Sort", 1920, 1080);
                         menu.onBubbleClicked(() -> {
                                 menu.hideWindow();
-                                new SortDisplay("Bubble sort", 1920, 1080);
+                                new SortDisplay("Bubble sort", 1920, 1080, menu::showWindow);
                         });
 
                         menu.onSelectionClicked(() -> {
                                 menu.hideWindow();
-                                new SortDisplay("Selection sort", 1920, 1080);
+                                new SortDisplay("Selection sort", 1920, 1080, menu::showWindow);
                         });
 
                         menu.onInsertionClicked(() -> {
                                 menu.hideWindow();
-                                new SortDisplay("Insertion sort", 1920, 1080);
+                                new SortDisplay("Insertion sort", 1920, 1080, menu::showWindow);
                         });
 
                         menu.onMergeClicked(() -> {
                                 menu.hideWindow();
-                                new SortDisplay("Merge sort", 1920, 1080);
+                                new SortDisplay("Merge sort", 1920, 1080, menu::showWindow);
                         });
                 });
         }

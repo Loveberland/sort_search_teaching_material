@@ -1,5 +1,8 @@
 package main.java.com.stm.display;
 
+import main.java.com.stm.algorithms.BubbleSort;
+import main.java.com.stm.algorithms.SortAlgorithms;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,10 +12,27 @@ public class SortDisplay extends JFrame {
         private BarPanel barPanel;
         private GraphicsDevice device;
 
-        public SortDisplay(String sortType, int wid, int hei) {
+	private JButton startBtn;
+	private JButton resetBtn;
+	private JButton backBtn;
+	private JSlider speedSlider;
+	private JLabel speedLabel;
+
+	private SortAlgorithms algorithm; 
+	private final String sortType;
+	private final Runnable onBack;
+
+	private static final int DELAY_MIN = 10;
+	private static final int DELAY_MAX = 500;
+	private static int DELAY_DEFAULT = 150;
+
+        public SortDisplay(String sortType, int wid, int hei, Runnable onBack) {
                 super(sortType);
-                initComponents(sortType);
+		this.sortType = sortType;
+		this.onBack = onBack; 
+                initComponents();
                 initLayout();
+		initAlgorithm();
                 configureWindow(wid, hei);
         }
 
@@ -37,14 +57,57 @@ public class SortDisplay extends JFrame {
                 mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                 mainPanel.add(titleLabel, BorderLayout.NORTH);
                 mainPanel.add(barPanel, BorderLayout.CENTER);
+		mainPanel.add(buildControlPanel(), BorderLayout.SOUTH);
                 add(mainPanel);
         }
 
-        private void initComponents(String sortType) {
-                titleLabel = new JLabel(sortType, SwingConstants.CENTER);
-                titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
-                barPanel = new BarPanel();
-        }
+        private void initComponents() {
+       		titleLabel = new JLabel(sortType, SwingConstants.CENTER);
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+
+		barPanel = new BarPanel();
+
+		startBtn = createStyleBtn("Start", new Color(102, 187, 106), Color.WHITE);	
+		resetBtn = createStyleBtn("Reset", new Color(102, 187, 106), Color.WHITE);	
+		backBtn = createStyleBtn("Back", new Color(102, 187, 106), Color.WHITE);	
+	
+		startBtn.addActionListener(e -> onStartClicked());
+		resetBtn.addActionListener(e -> onStartClicked());
+		backBtn.addActionListener(e -> onStartClicked());
+
+		speedLabel = new JLabel("Speed: Medium", SwingConstants.CENTER);
+		speedLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+
+		speedSlider = new JSlider(DELAY_MIN, DELAY_MAX, DELAY_DEFAULT);
+		speedSlider.setInverted(true);
+		speedSlider.setOpaque(false);
+		speedSlider.addChangeListener(e -> onSpeedChanged());
+	}
+
+	private JPanel buildControlPanel() {
+		JPanel speedPanel = new JPanel(new BorderLayout(4, 4));
+		speedPanel.setOpaque(false);
+		speedPanel.add(speedLabel, BorderLayout.NORTH);
+		speedPanel.add(speedLabel, BorderLayout.CENTER);
+		speedPanel.setPreferredSize(new Dimension(260, 55));
+
+		JPanel ctrl = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 12));
+		ctrl.add(backBtn);
+		ctrl.add(resetBtn);
+		ctrl.add(startBtn);
+		ctrl.add(speedPanel);
+		return ctrl;
+	}
+
+	private void initAlgorithm() {
+		switch (sortType) {
+			case "Bubble sort":
+				algorithm = new BubbleSort(barPanel, speedSlider.getValue());
+				break;
+			default:
+				algorithm = null;	
+		}	
+	}
 
         public void hideWindow() {
                 if (device != null) {
@@ -52,4 +115,57 @@ public class SortDisplay extends JFrame {
                 }
                 setVisible(false);
         }
+
+	private void onStartClicked() {
+		if (algorithm == null) return;
+
+		if (algorithm.isRunning()) {
+			algorithm.stop();
+			startBtn.setText("Resume");
+			
+		} else {
+			algorithm.start();
+			startBtn.setText("Pause");
+		}
+	}
+
+	private void onResetClicked() {
+		if (algorithm != null) algorithm.stop();
+		startBtn.setText("Start");
+
+		int count = barPanel.bars.size();
+		barPanel.generateBars(count);
+		initAlgorithm();
+	}
+
+	private void onBackClicked() {
+		if (algorithm != null) algorithm.stop();
+		hideWindow();
+		if (onBack != null) SwingUtilities.invokeLater(onBack);
+	}	
+
+	private void onSpeedChanged() {
+		int delay = speedSlider.getValue();
+		if (delay < 150) {
+			speedLabel.setText("Speed: Fast");
+		} else if (delay < 400) {
+			speedLabel.setText("Speed: Medium");
+		} else {
+			speedLabel.setText("SPeed: Slow");
+		}
+
+		if (algorithm != null) algorithm.setDelay(delay);	
+	}
+
+	private static JButton createStyleBtn(String label, Color bg, Color fg) {
+		JButton btn = new JButton(label);
+		btn.setBackground(bg);
+		btn.setForeground(fg);
+		btn.setFocusPainted(false);
+		btn.setFont(new Font("Arial", Font.BOLD, 14));
+		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		btn.setPreferredSize(new Dimension(145, 45));
+		return btn;
+	}
 }
+
