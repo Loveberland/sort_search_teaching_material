@@ -6,4 +6,3 @@ public interface SortAlgorithms {
 	boolean isRunning();
 	void setDelay(int delayMs);
 }
-

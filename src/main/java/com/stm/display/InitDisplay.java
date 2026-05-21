@@ -5,12 +5,16 @@ import java.awt.*;
 
 public class InitDisplay extends JFrame {
         private JPanel mainPanel;
-        private JLabel titleLabel; private GraphicsDevice device;
+        private JLabel titleLabel;
+        private GraphicsDevice device;
 
         private Btn bubble;
         private Btn selection;
         private Btn insert;
         private Btn merge;
+        private Btn quick;
+        private Btn linear;
+        private Btn binary;
 
         public InitDisplay(String title, int wid, int hei) {
                 super(title);
@@ -27,11 +31,17 @@ public class InitDisplay extends JFrame {
                 selection = new Btn("Selection sort", new Color(179, 157, 219), Color.WHITE);
                 insert = new Btn("Insertion sort", new Color(179, 157, 219), Color.WHITE);
                 merge = new Btn("Merge sort", new Color(179, 157, 219), Color.WHITE);
+                quick = new Btn("Quick sort", new Color(179, 157, 219), Color.WHITE);
+                linear = new Btn("Linear search", new Color(179, 157, 219), Color.WHITE);
+                binary = new Btn("Binary search", new Color(179, 157, 219), Color.WHITE);
 
                 bubble.setSize(320, 180);
                 selection.setSize(320, 180);
                 insert.setSize(320, 180);
                 merge.setSize(320, 180);
+                quick.setSize(320, 180);
+                linear.setSize(320, 180);
+                binary.setSize(320, 180);
         }
 
         private void initLayout() {
@@ -43,6 +53,9 @@ public class InitDisplay extends JFrame {
                 btnPanel.add(selection.getBtn());
                 btnPanel.add(insert.getBtn());
                 btnPanel.add(merge.getBtn());
+                btnPanel.add(quick.getBtn());
+                btnPanel.add(linear.getBtn());
+                btnPanel.add(binary.getBtn());
 
                 mainPanel.add(titleLabel, BorderLayout.NORTH);
                 mainPanel.add(btnPanel, BorderLayout.CENTER);
@@ -81,6 +94,18 @@ public class InitDisplay extends JFrame {
                 merge.onClick(action);
         }
 
+        public void onQuickClicked(Runnable action) {
+                quick.onClick(action);
+        }
+
+        public void onLinearClicked(Runnable action) {
+                linear.onClick(action);
+        }
+
+        public void onBinaryClicked(Runnable action) {
+                binary.onClick(action);
+        }
+
         public void hideWindow() {
                 if (device != null) {
                         device.setFullScreenWindow(null);
@@ -88,11 +113,10 @@ public class InitDisplay extends JFrame {
                 setVisible(false);
         }
 
-	public void showWindow() {
-		if (device != null && device.isFullScreenSupported()) {
-			device.setFullScreenWindow(this);
-		}
-		setVisible(true);	
-	}
+        public void showWindow() {
+                if (device != null && device.isFullScreenSupported()) {
+                        device.setFullScreenWindow(this);
+                }
+                setVisible(true);
+        }
 }
-

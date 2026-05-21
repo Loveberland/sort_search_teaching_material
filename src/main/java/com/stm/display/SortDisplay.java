@@ -1,13 +1,10 @@
 package main.java.com.stm.display;
 
-import main.java.com.stm.algorithms.BubbleSort;
-import main.java.com.stm.algorithms.SelectionSort;
-import main.java.com.stm.algorithms.InsertionSort;
-import main.java.com.stm.algorithms.MergeSort;
-import main.java.com.stm.algorithms.SortAlgorithms;
+import main.java.com.stm.algorithms.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class SortDisplay extends JFrame {
 	private JPanel mainPanel;
@@ -108,13 +105,20 @@ public class SortDisplay extends JFrame {
 				algorithm = new BubbleSort(barPanel, speedSlider.getValue());
 				break;
 			case "Selection sort":
-				algorithm = new SelectionSort(barPanel, speedSlider.getValue());	
+				algorithm = new SelectionSort(barPanel, speedSlider.getValue());
 				break;
 			case "Insertion sort":
-				algorithm = new InsertionSort(barPanel, speedSlider.getValue());	
+				algorithm = new InsertionSort(barPanel, speedSlider.getValue());
 				break;
 			case "Merge sort":
-				algorithm = new MergeSort(barPanel, speedSlider.getValue());	
+				algorithm = new MergeSort(barPanel, speedSlider.getValue());
+				break;
+			case "Quick sort":
+				algorithm = new QuickSort(barPanel, speedSlider.getValue());
+				break;
+			case "Linear search":
+				break;
+			case "Binary search":
 				break;
 			default:
 				algorithm = null;
@@ -147,7 +151,9 @@ public class SortDisplay extends JFrame {
 			algorithm.stop();
 		startBtn.setText("Start");
 
-		int count = barPanel.bars.size();
+		// int count = barPanel.bars.size();
+		Random tmpRand = new Random();
+		int count = tmpRand.nextInt(100 - 10 + 1) + 10;
 		barPanel.generateBars(count);
 		initAlgorithm();
 	}
