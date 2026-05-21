@@ -18,6 +18,8 @@ public class BubbleSort implements SortAlgorithms {
 	private volatile boolean running = false;
 	private Thread sortThread;
 
+	private int keepI, keepJ;
+
 	public BubbleSort(BarPanel barPanel, int delayMs) {
 		this.barPanel = barPanel;
 		this.delayMs = delayMs;
@@ -60,10 +62,13 @@ public class BubbleSort implements SortAlgorithms {
 		List<Bar> bars = barPanel.bars;
 		int n = bars.size();
 
-		for (int i = 0; i < n - 1 && running; i++) {
-			boolean swapped = false;	
+		for (int i = keepI; i < n - 1 && running; i++) {
+			keepI = i;
 
-			for (int j = 0; j < n - i - 1 && running; j++) {
+			boolean swapped = false;	
+			for (int j = keepJ; j < n - i - 1 && running; j++) {
+				keepJ = j;
+
 				highlight(j, COMPARE_COLOR);
 				highlight(j + 1, COMPARE_COLOR);
 				repaintAndSleep();
@@ -84,6 +89,7 @@ public class BubbleSort implements SortAlgorithms {
 			highlight(n - i - 1, SORTED_COLOR);
 			repaintAndSleep();
 			if (!swapped) break;
+			keepI = keepJ = 0;
 		}
 	
 		SwingUtilities.invokeLater(() -> {

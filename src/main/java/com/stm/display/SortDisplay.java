@@ -72,8 +72,8 @@ public class SortDisplay extends JFrame {
 		backBtn = createStyleBtn("Back", new Color(102, 187, 106), Color.WHITE);	
 	
 		startBtn.addActionListener(e -> onStartClicked());
-		resetBtn.addActionListener(e -> onStartClicked());
-		backBtn.addActionListener(e -> onStartClicked());
+		resetBtn.addActionListener(e -> onResetClicked());
+		backBtn.addActionListener(e -> onBackClicked());
 
 		speedLabel = new JLabel("Speed: Medium", SwingConstants.CENTER);
 		speedLabel.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -88,7 +88,7 @@ public class SortDisplay extends JFrame {
 		JPanel speedPanel = new JPanel(new BorderLayout(4, 4));
 		speedPanel.setOpaque(false);
 		speedPanel.add(speedLabel, BorderLayout.NORTH);
-		speedPanel.add(speedLabel, BorderLayout.CENTER);
+		speedPanel.add(speedSlider, BorderLayout.CENTER);
 		speedPanel.setPreferredSize(new Dimension(260, 55));
 
 		JPanel ctrl = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 12));
