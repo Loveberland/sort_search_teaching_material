@@ -18,6 +18,8 @@ public class InsertionSort implements SortAlgorithms {
         private volatile boolean running = false;
         private Thread sortThread;
 
+        private int keepI = 0;
+
         public InsertionSort(BarPanel barPanel, int delayMs) {
                 this.barPanel = barPanel;
                 this.delayMs = delayMs;
@@ -59,7 +61,26 @@ public class InsertionSort implements SortAlgorithms {
         }
 
         private void sort() throws InterruptedException {
-
+                List<Bar> bars = barPanel.bars;
+                int n = bars.size();
+                for (int i = keepI; i < n && running; i++) {
+                        keepI = i;
+                        int key = bars.get(i).getValue();
+                        int j = i - 1;
+                        while (j >= 0 && bars.get(j).getValue() > key) {
+                                bars.get(j + 1).setValue(bars.get(j).getValue());
+                                repaintAndSleep(); 
+                                j--;
+                        }
+                        bars.get(j + 1).setValue(key);
+                        repaintAndSleep();
+                }
+               		SwingUtilities.invokeLater(() -> {
+			for (Bar b : barPanel.bars) {
+				b.setColor(SORTED_COLOR);
+			}
+			barPanel.repaint();
+		}); 
         }
 
         private void highlight(int index, Color color) {

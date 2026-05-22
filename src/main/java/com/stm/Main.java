@@ -30,8 +30,8 @@ public class Main {
 
                         menu.onInsertionClicked(() -> {
                                 menu.hideWindow();
-                                // new SortDisplay("Insertion sort", 1920, 1080, menu::showWindow);
-                                System.exit(0);
+                                new SortDisplay("Insertion sort", 1920, 1080, menu::showWindow);
+                                // System.exit(0);
                         });
 
                         menu.onMergeClicked(() -> {
