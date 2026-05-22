@@ -66,21 +66,27 @@ public class InsertionSort implements SortAlgorithms {
                 for (int i = keepI; i < n && running; i++) {
                         keepI = i;
                         int key = bars.get(i).getValue();
+                        highlight(i, COMPARE_COLOR);
+                        repaintAndSleep();
                         int j = i - 1;
                         while (j >= 0 && bars.get(j).getValue() > key) {
+                                highlight(j, SWAP_COLOR);
+                                highlight(j + 1, SWAP_COLOR);
+                                repaintAndSleep();
                                 bars.get(j + 1).setValue(bars.get(j).getValue());
-                                repaintAndSleep(); 
+                                highlight(j, DEFAULT_COLOR);
+                                highlight(j + 1, DEFAULT_COLOR);
+                                repaintAndSleep();
                                 j--;
                         }
                         bars.get(j + 1).setValue(key);
-                        repaintAndSleep();
                 }
-               		SwingUtilities.invokeLater(() -> {
-			for (Bar b : barPanel.bars) {
-				b.setColor(SORTED_COLOR);
-			}
-			barPanel.repaint();
-		}); 
+                SwingUtilities.invokeLater(() -> {
+                        for (Bar b : barPanel.bars) {
+                                b.setColor(SORTED_COLOR);
+                        }
+                        barPanel.repaint();
+                });
         }
 
         private void highlight(int index, Color color) {
