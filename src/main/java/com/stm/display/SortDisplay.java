@@ -70,8 +70,21 @@ public class SortDisplay extends JFrame {
 		titleLabel = new JLabel(sortType, SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-		if (sortType.equals("Binary search") || sortType.equals("Linear search")) {
-			barPanel = new BarPanel(false);
+		if (sortType.equals("Binary search")) {
+			barPanel = new BarPanel("Binary search");
+			findField = new JTextField(10);
+			findFieldLabel = new JLabel("Enter number 1 - 100");
+			submitBtn = createStyleBtn("Submit", new Color(102, 187, 106), Color.WHITE);
+			submitBtn.addActionListener(e -> {
+				try {
+					findNumber = Integer.parseInt(findField.getText().trim());
+					JOptionPane.showMessageDialog(this, "Please reset after submit number");
+				} catch (NumberFormatException ex) {
+					System.err.println(ex);
+				}
+			});
+		} else if (sortType.equals("Linear search")) {
+			barPanel = new BarPanel("Binary search");
 			findField = new JTextField(10);
 			findFieldLabel = new JLabel("Enter number 1 - 100");
 			submitBtn = createStyleBtn("Submit", new Color(102, 187, 106), Color.WHITE);
@@ -84,7 +97,7 @@ public class SortDisplay extends JFrame {
 				}
 			});
 		} else
-			barPanel = new BarPanel(true);
+			barPanel = new BarPanel();
 		startBtn = createStyleBtn("Start", new Color(102, 187, 106), Color.WHITE);
 		resetBtn = createStyleBtn("Reset", new Color(102, 187, 106), Color.WHITE);
 		backBtn = createStyleBtn("Back", new Color(102, 187, 106), Color.WHITE);
@@ -143,7 +156,7 @@ public class SortDisplay extends JFrame {
 				algorithm = new LinearSearch(barPanel, speedSlider.getValue(), findNumber);
 				break;
 			case "Binary search":
-				algorithm = new BinarySearch(barPanel, speedSlider.getValue(), findNumber);	
+				algorithm = new BinarySearch(barPanel, speedSlider.getValue(), findNumber);
 				break;
 			default:
 				algorithm = null;
@@ -178,7 +191,7 @@ public class SortDisplay extends JFrame {
 		int count;
 		Random tmpRand = new Random();
 		if (sortType.equals("Binary search") || sortType.equals("Linear search"))
-			barPanel.generateBars();
+			barPanel.generateBars(sortType);
 		else {
 			count = tmpRand.nextInt(100 - 10 + 1) + 10;
 			barPanel.generateBars(count);

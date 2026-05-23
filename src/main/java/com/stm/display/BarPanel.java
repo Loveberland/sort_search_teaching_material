@@ -3,6 +3,7 @@ package main.java.com.stm.display;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -12,18 +13,20 @@ public class BarPanel extends JPanel {
         private static final int MAX_VAL = 100;
         private static Random rand = new Random();
         private static final int RANDOM_AMOUNT = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
-        private static final int DEFAULT_AMOUNT = 100;
         private static final int GAP = 4;
         private static final int BOT_PAD = 20;
         private static final double BAR_MAX_HEI_RATIO = 0.85;
 
-        public BarPanel(boolean isSort) {
+        public BarPanel() {
                 setBackground(Color.WHITE);
                 bars = new ArrayList<>();
-                if (isSort)
-                        generateBars(RANDOM_AMOUNT);
-                else
-                        generateBars();
+                generateBars(RANDOM_AMOUNT);
+        }
+
+        public BarPanel(String searchType) {
+                setBackground(Color.WHITE);
+                bars = new ArrayList<>();
+                generateBars(searchType);
         }
 
         public void generateBars(int amount) {
@@ -35,10 +38,19 @@ public class BarPanel extends JPanel {
                 repaint();
         }
 
-        public void generateBars() {
+        public void generateBars(String searchType) {
                 bars.clear();
-                for (int i = 1; i <= DEFAULT_AMOUNT; i++)
-                        bars.add(new Bar(i));
+                List<Integer> tmp = new ArrayList<>();
+                if (searchType.equals("Linear search")) {
+                        for (int i = 1; i <= MAX_VAL; i++)
+                                tmp.add(i);
+                        Collections.shuffle(tmp);
+                        for (int i = 0; i < MAX_VAL; i++)
+                                bars.add(new Bar(tmp.get(i)));
+                } else {
+                        for (int i = 1; i <= MAX_VAL; i++)
+                                bars.add(new Bar(i));
+                }
                 repaint();
         }
 
