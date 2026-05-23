@@ -65,13 +65,15 @@ public class LinearSearch implements Algorithms {
                 int n = bars.size();
                 boolean find = false;
                 for (int i = 0; i < n; i++) {
+                        highlight(i, COMPARE_COLOR);
+                        repaintAndSleep();
                         if (bars.get(i).getValue() == number) {
                                 highlight(i, FIND_COLOR);
                                 find = true;
                                 repaintAndSleep();
                                 break;
                         } else {
-                                highlight(i, COMPARE_COLOR);
+                                highlight(i, NOT_FOUND_COLOR);
                                 repaintAndSleep();
                         }
                 }

@@ -143,6 +143,7 @@ public class SortDisplay extends JFrame {
 				algorithm = new LinearSearch(barPanel, speedSlider.getValue(), findNumber);
 				break;
 			case "Binary search":
+				algorithm = new BinarySearch(barPanel, speedSlider.getValue(), findNumber);	
 				break;
 			default:
 				algorithm = null;

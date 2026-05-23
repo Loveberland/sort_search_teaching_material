@@ -54,8 +54,8 @@ public class Main {
                         
                         menu.onBinaryClicked(() -> {
                                 menu.hideWindow();
-                                // new SortDisplay("Binary search", 1920, 1080, menu::showWindow);
-                                System.exit(0);
+                                new SortDisplay("Binary search", 1920, 1080, menu::showWindow);
+                                // System.exit(0);
                         });
                 });
         }
