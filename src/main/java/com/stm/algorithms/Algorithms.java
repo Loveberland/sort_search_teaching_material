@@ -1,6 +1,6 @@
 package main.java.com.stm.algorithms;
 
-public interface SortAlgorithms {
+public interface Algorithms {
 	void start();
 	void stop();
 	boolean isRunning();

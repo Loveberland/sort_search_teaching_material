@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class SelectionSort implements SortAlgorithms {
+public class SelectionSort implements Algorithms {
         private static final Color DEFAULT_COLOR = new Color(179, 157, 219);
         private static final Color COMPARE_COLOR = new Color(255, 183, 77);
         private static final Color SWAP_COLOR = new Color(239, 83, 80);

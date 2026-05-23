@@ -48,8 +48,8 @@ public class Main {
                         
                         menu.onLinearClicked(() -> {
                                 menu.hideWindow();
-                                // new SortDisplay("Linear search", 1920, 1080, menu::showWindow);
-                                System.exit(0);
+                                new SortDisplay("Linear search", 1920, 1080, menu::showWindow);
+                                // System.exit(0);
                         });
                         
                         menu.onBinaryClicked(() -> {

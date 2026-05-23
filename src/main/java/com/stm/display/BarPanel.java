@@ -11,15 +11,19 @@ public class BarPanel extends JPanel {
         private static final int MIN_VAL = 10;
         private static final int MAX_VAL = 100;
         private static Random rand = new Random();
-        private static final int DEFAULT_AMOUNT = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
+        private static final int RANDOM_AMOUNT = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
+        private static final int DEFAULT_AMOUNT = 100;
         private static final int GAP = 4;
         private static final int BOT_PAD = 20;
         private static final double BAR_MAX_HEI_RATIO = 0.85;
 
-        public BarPanel() {
+        public BarPanel(boolean isSort) {
                 setBackground(Color.WHITE);
                 bars = new ArrayList<>();
-                generateBars(DEFAULT_AMOUNT);
+                if (isSort)
+                        generateBars(RANDOM_AMOUNT);
+                else
+                        generateBars();
         }
 
         public void generateBars(int amount) {
@@ -28,6 +32,13 @@ public class BarPanel extends JPanel {
                         int value = rand.nextInt(MAX_VAL - MIN_VAL + 1) + MIN_VAL;
                         bars.add(new Bar(value));
                 }
+                repaint();
+        }
+
+        public void generateBars() {
+                bars.clear();
+                for (int i = 1; i <= DEFAULT_AMOUNT; i++)
+                        bars.add(new Bar(i));
                 repaint();
         }
 

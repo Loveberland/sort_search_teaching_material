@@ -17,14 +17,19 @@ public class SortDisplay extends JFrame {
 	private JButton backBtn;
 	private JSlider speedSlider;
 	private JLabel speedLabel;
+	private JTextField findField;
+	private JLabel findFieldLabel;
+	private JButton submitBtn;
 
-	private SortAlgorithms algorithm;
+	private Algorithms algorithm;
 	private final String sortType;
 	private final Runnable onBack;
 
 	private static final int DELAY_MIN = 10;
 	private static final int DELAY_MAX = 500;
 	private static int DELAY_DEFAULT = 150;
+
+	private int findNumber = 50;
 
 	public SortDisplay(String sortType, int wid, int hei, Runnable onBack) {
 		super(sortType);
@@ -65,8 +70,21 @@ public class SortDisplay extends JFrame {
 		titleLabel = new JLabel(sortType, SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-		barPanel = new BarPanel();
-
+		if (sortType.equals("Binary search") || sortType.equals("Linear search")) {
+			barPanel = new BarPanel(false);
+			findField = new JTextField(10);
+			findFieldLabel = new JLabel("Enter number 1 - 100");
+			submitBtn = createStyleBtn("Submit", new Color(102, 187, 106), Color.WHITE);
+			submitBtn.addActionListener(e -> {
+				try {
+					findNumber = Integer.parseInt(findField.getText().trim());
+					JOptionPane.showMessageDialog(this, "Please reset after submit number");
+				} catch (NumberFormatException ex) {
+					System.err.println(ex);
+				}
+			});
+		} else
+			barPanel = new BarPanel(true);
 		startBtn = createStyleBtn("Start", new Color(102, 187, 106), Color.WHITE);
 		resetBtn = createStyleBtn("Reset", new Color(102, 187, 106), Color.WHITE);
 		backBtn = createStyleBtn("Back", new Color(102, 187, 106), Color.WHITE);
@@ -96,6 +114,11 @@ public class SortDisplay extends JFrame {
 		ctrl.add(resetBtn);
 		ctrl.add(startBtn);
 		ctrl.add(speedPanel);
+		if (sortType.equals("Binary search") || sortType.equals("Linear search")) {
+			ctrl.add(findField);
+			ctrl.add(findFieldLabel);
+			ctrl.add(submitBtn);
+		}
 		return ctrl;
 	}
 
@@ -117,6 +140,7 @@ public class SortDisplay extends JFrame {
 				algorithm = new QuickSort(barPanel, speedSlider.getValue());
 				break;
 			case "Linear search":
+				algorithm = new LinearSearch(barPanel, speedSlider.getValue(), findNumber);
 				break;
 			case "Binary search":
 				break;
@@ -150,11 +174,14 @@ public class SortDisplay extends JFrame {
 		if (algorithm != null)
 			algorithm.stop();
 		startBtn.setText("Start");
-
-		// int count = barPanel.bars.size();
+		int count;
 		Random tmpRand = new Random();
-		int count = tmpRand.nextInt(100 - 10 + 1) + 10;
-		barPanel.generateBars(count);
+		if (sortType.equals("Binary search") || sortType.equals("Linear search"))
+			barPanel.generateBars();
+		else {
+			count = tmpRand.nextInt(100 - 10 + 1) + 10;
+			barPanel.generateBars(count);
+		}
 		initAlgorithm();
 	}
 
