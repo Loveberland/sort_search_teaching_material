@@ -42,8 +42,8 @@ public class Main {
                 
                         menu.onQuickClicked(() -> {
                                 menu.hideWindow();
-                                // new SortDisplay("Quick sort", 1920, 1080, menu::showWindow);
-                                System.exit(0);
+                                new SortDisplay("Quick sort", 1920, 1080, menu::showWindow);
+                                // System.exit(0);
                         });
                         
                         menu.onLinearClicked(() -> {
