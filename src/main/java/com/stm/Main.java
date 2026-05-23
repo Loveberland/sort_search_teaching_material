@@ -36,8 +36,8 @@ public class Main {
 
                         menu.onMergeClicked(() -> {
                                 menu.hideWindow();
-                                // new SortDisplay("Merge sort", 1920, 1080, menu::showWindow);
-                                System.exit(0);
+                                new SortDisplay("Merge sort", 1920, 1080, menu::showWindow);
+                                // System.exit(0);
                         });
                 
                         menu.onQuickClicked(() -> {
