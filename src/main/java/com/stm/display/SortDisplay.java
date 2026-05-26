@@ -42,19 +42,12 @@ public class SortDisplay extends JFrame {
 	}
 
 	private void configureWindow(int wid, int hei) {
-		device = GraphicsEnvironment
-				.getLocalGraphicsEnvironment()
-				.getDefaultScreenDevice();
-		setUndecorated(true);
-		setResizable(false);
-		if (device.isFullScreenSupported()) {
-			device.setFullScreenWindow(this);
-		} else {
-			setExtendedState(JFrame.MAXIMIZED_BOTH);
-		}
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
-		setVisible(true);
+		setUndecorated(false);
+                setResizable(true);
+                setExtendedState(JFrame.MAXIMIZED_BOTH); 
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setLocationRelativeTo(null);
+                setVisible(true);
 	}
 
 	private void initLayout() {
