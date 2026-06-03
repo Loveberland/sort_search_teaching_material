@@ -24,7 +24,7 @@ public class InitDisplay extends JFrame {
         }
 
         private void initComponents() {
-                titleLabel = new JLabel("Sort", SwingConstants.CENTER);
+                titleLabel = new JLabel("ALGORITHMS", SwingConstants.CENTER);
                 titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
 
                 bubble = new Btn("Bubble sort", new Color(179, 157, 219), Color.WHITE);
